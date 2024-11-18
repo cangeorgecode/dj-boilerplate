@@ -27,16 +27,16 @@ I have always wanted to build an SaaS and make money online. I thought it would 
 # Environment variables you need:
 
 ## From your email service provider
-EMAIL_HOST_USER
+EMAIL_HOST_USER  
 EMAIL_HOST_PASSWORD
 
 ## From Stripe
-STRIPE_PUBLISHABLE_KEY
-STRIPE_SECRET_KEY
+STRIPE_PUBLISHABLE_KEY  
+STRIPE_SECRET_KEY  
 STRIPE_WEBHOOK_SECRET
 
 ## Price ID from Stripe
-HOBBYIST_YEARLY
+HOBBYIST_YEARLY  
 PRO_LIFETIME
 
 # Contact me

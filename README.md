@@ -21,7 +21,11 @@ I have always wanted to build an SaaS and make money online. I thought it would 
 ``` python manage.py tailwind install```
 ``` python manage.py tailwind start```
 
-- In a new terminal, 
+- Create a superuser to access the admin panel
+``` python manage.py createsuperuser ```
+
+- In a new terminal, migrate
+``` python manage.py migrate ```
 ``` python manage.py runserver```
 
 # Environment variables you need:

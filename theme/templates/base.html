@@ -1,0 +1,34 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <title>SaaS Boilerplate</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+		<link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+		
+		{% tailwind_css %}
+		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+		<script src="https://unpkg.com/htmx.org@1.6.1"></script>		
+	</head>
+
+	<body class="leading-normal tracking-normal">
+		{% block content %}
+		{% endblock content %}
+
+		<!-- Notification disappears after a while -->
+		<script>
+			// Set a timeout to remove the notification after 3 seconds
+			setTimeout(function() {
+				var notification = document.getElementById('notification');
+				if (notification) {
+					notification.remove();
+				}
+			}, 3000);
+		</script>
+
+		
+	</body>
+</html>

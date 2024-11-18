@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'core/header.html' %}
+
+<!-- Display messages -->
+{% if messages %}
+<div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="relative max-w-md mx-auto lg:max-w-lg">
+        <div class="relative overflow-hidden bg-white shadow-xl rounded-xl">
+            <div class="px-4 py-6 sm:px-8">
+                {% for message in messages %}
+                <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+                    <span class="font-medium">{{ message }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<section class="py-12 bg-gray-50 sm:py-16 lg:py-20">
+    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="relative max-w-md mx-auto lg:max-w-lg">
+            <div class="absolute -inset-2">
+                <div class="w-full h-full mx-auto rounded-3xl opacity-30 blur-lg filter" style="background: linear-gradient(90deg, #44ff9a -0.55%, #44b0ff 22.86%, #8b44ff 48.36%, #ff6644 73.33%, #ebff70 99.34%)"></div>
+            </div>
+
+            <div class="relative overflow-hidden bg-white shadow-xl rounded-xl">
+                <div class="px-4 py-6 sm:px-8">
+                    <div class="flex items-center justify-between">
+                        <h1 class="text-xl font-bold text-gray-900 font-pj">Sign up</h1>
+
+                        <p class="text-base font-normal text-gray-900 font-pj">Already joined? <a href="{% url 'login' %}" title="" class="font-bold rounded hover:underline focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">Login now</a></p>
+                    </div>
+
+                    <form method="POST" class="mt-12">
+                        {% csrf_token %}
+                        <div class="space-y-4">
+
+                            <div>
+                                <label for="username" class="text-base font-medium text-gray-900 font-pj"> Username </label>
+                                <div class="mt-2.5">
+                                    <input type="text" name="username" id="username" placeholder="Username" class="block w-full px-4 py-4 text-gray-900 placeholder-gray-600 bg-white border border-gray-400 rounded-xl focus:border-gray-900 focus:ring-gray-900 caret-gray-900"
+                                           hx-trigger="keyup changed delay:500ms"
+                                           hx-get="{% url 'check_username' %}?username={{ username.value }}"
+                                           hx-target="#username-feedback" />
+                                </div>
+                                <div id="username-feedback" class="text-red-500"></div>
+                            </div>
+
+                            <div>
+                                <label for="email" class="text-base font-medium text-gray-900 font-pj"> Email </label>
+                                <div class="mt-2.5">
+                                    <input type="email" name="email" id="email" placeholder="Email address" class="block w-full px-4 py-4 text-gray-900 placeholder-gray-600 bg-white border border-gray-400 rounded-xl focus:border-gray-900 focus:ring-gray-900 caret-gray-900" />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="password1" class="text-base font-medium text-gray-900 font-pj"> Password </label>
+                                <div class="mt-2.5">
+                                    <input type="password" name="password1" id="password1" placeholder="Password (min. 8 character)" class="block w-full px-4 py-4 text-gray-900 placeholder-gray-600 bg-white border border-gray-400 rounded-xl focus:border-gray-900 focus:ring-gray-900 caret-gray-900" />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="password2" class="text-base font-medium text-gray-900 font-pj"> Password </label>
+                                <div class="mt-2.5">
+                                    <input type="password" name="password2" id="password2" placeholder="Enter your password again" class="block w-full px-4 py-4 text-gray-900 placeholder-gray-600 bg-white border border-gray-400 rounded-xl focus:border-gray-900 focus:ring-gray-900 caret-gray-900" />
+                                </div>
+                            </div>
+
+                            <div class="relative flex items-center mt-4">
+                            </div>
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="flex items-center justify-center w-full px-8 py-4 mt-5 text-base font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 font-pj hover:bg-gray-600"
+                        >
+                            Sign up
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

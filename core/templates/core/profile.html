@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'core/header.html' %}
+<div class="h-[600px] bg-gray-100">
+    <div class="flex items-center justify-center w-full h-full px-4 py-5 sm:p-6">
+        <div class="w-full max-w-sm bg-white shadow-lg rounded-xl">
+            <div class="px-4 py-5 sm:p-6">
+                <p class="text-xl font-bold text-gray-900">Hello, {{ user.username }}</p>
+                <p class="mt-3 text-sm font-medium text-gray-500"></p>
+
+                <div class="space-y-4">
+                    <div class="pt-6">
+                        <label for="" class="text-sm font-bold text-gray-900"> Email address </label>
+                        <div class="flex items-center">
+                            <div class="flex-1 min-w-0 ml-4">
+                                <!-- <p class="text-sm font-bold text-gray-900 truncate">Email Address</p> -->
+                                <p class="mt-1 text-xs font-medium text-gray-500">{{ user.email }} </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if plan %}
+                <div class="space-y-4">
+                    <div class="pt-6">
+                        <label for="" class="text-sm font-bold text-gray-900"> Subscription Details </label>
+                        <div class="flex items-center">
+                            <div class="flex-1 min-w-0 ml-4">
+                                <!-- <p class="text-sm font-bold text-gray-900 truncate">Email Address</p> -->
+                                <p class="mt-1 text-xs font-medium text-gray-500">{{ plan }} </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="pt-6">
+                        <label for="" class="text-sm font-bold text-gray-900"> Billing Cycle </label>
+                        <div class="flex items-center">
+                            <div class="flex-1 min-w-0 ml-4">
+                                <!-- <p class="text-sm font-bold text-gray-900 truncate">Email Address</p> -->
+                                <p class="mt-1 text-xs font-medium text-gray-500">{{ billing_cycle }} </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    {% if billing_cycle != 'lifetime' %}
+                    <div class="space-y-4">
+                        <div class="pt-6">
+                            <label for="" class="text-sm font-bold text-gray-900"> Next Payment Date </label>
+                            <div class="flex items-center">
+                                <div class="flex-1 min-w-0 ml-4">
+                                    <!-- <p class="text-sm font-bold text-gray-900 truncate">Email Address</p> -->
+                                    <p class="mt-1 text-xs font-medium text-gray-500">{{ next_payment_date|date:"F j, Y" }} </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="space-y-4">
+                        <div class="pt-6">
+                            <label for="" class="text-sm font-bold text-gray-900"> Lifetime Access </label>
+                            <div class="flex items-center">
+                                <div class="flex-1 min-w-0 ml-4">
+                                    <!-- <p class="text-sm font-bold text-gray-900 truncate">Email Address</p> -->
+                                    <!-- <p class="mt-1 text-xs font-medium text-gray-500">{{ next_payment_date|date:"F j, Y" }} </p> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% else %}
+                <div class="space-y-4">
+                    <div class="pt-6">
+                        <label for="" class="text-sm font-bold text-gray-900"> Subscription plan </label>
+                        <div class="flex items-center">
+                            <div class="flex-1 min-w-0 ml-4">
+                                <!-- <p class="text-sm font-bold text-gray-900 truncate">Email Address</p> -->
+                                <p class="mt-1 text-xs font-medium text-gray-500">You are not subscribed to our plan </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="flex flex-col space-y-4 mt-5">
+                    <button
+                    type="button"
+                    class="inline-flex items-center justify-center px-2.5 py-1.5 text-sm leading-4 rounded-md border border-transparent transition-all duration-200 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 bg-indigo-600 hover:bg-indigo-500 font-semibold"><a href="{% url 'change_password' %}">Update Password</a>
+                    </button>
+
+                    {% if has_subscription %}
+                    <button
+                    type="button"
+                    class="inline-flex items-center justify-center px-2.5 py-1.5 text-sm leading-4 rounded-md border border-transparent transition-all duration-200 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 bg-indigo-600 hover:bg-indigo-500 font-semibold"><a href="{% url 'stripe_billing_portal' %}">Update Billing Info</a>
+                    </button>
+
+                    <button
+                    type="button"
+                    class="inline-flex items-center justify-center px-2.5 py-1.5 text-sm leading-4 rounded-md border border-transparent transition-all duration-200 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 bg-indigo-600 hover:bg-indigo-500 font-semibold"><a href="{% url 'receipt' %}">Download Receipt</a>
+                    </button>
+
+                    {% if user.subscription.billing_cycle == 'yearly' %}
+                    <form action="{% url 'upgrade_subscription' %}" method="post">
+                        {% csrf_token %}
+                        <button
+                        type="submit"
+                        class="inline-flex items-center justify-center px-2.5 py-1.5 text-sm leading-4 rounded-md border border-transparent transition-all duration-200 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 bg-indigo-600 hover:bg-indigo-500 font-semibold">Upgrade to Lifetime Access
+                        </button>
+                    </form>
+
+                    <form action="{% url 'cancel_subscription' %}" method="post">
+                        {% csrf_token %}
+                        <button
+                        type="submit"
+                        class="inline-flex items-center justify-center px-2.5 py-1.5 text-sm leading-4 rounded-md border border-transparent transition-all duration-200 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 bg-indigo-600 hover:bg-indigo-500 font-semibold">Cancel Subscription
+                        </button>
+                    </form>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'core/footer.html' %}
+
+{% endblock content %}

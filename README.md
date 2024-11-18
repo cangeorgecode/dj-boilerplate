@@ -1,5 +1,5 @@
 # Django Boilerplate
-Disclaimer: I am a self-taught programmer, so the code I wrote is not the best
+Disclaimer: The code may look like a steaming pile of dog crap, so be aware. 
 
 # What is this?
 I have always wanted to build an SaaS and make money online. I thought it would be more efficient if I could re-use some of the code for features that are common across all SaaS's. The boilerplate here consists of:
@@ -24,5 +24,23 @@ I have always wanted to build an SaaS and make money online. I thought it would 
 - In a new terminal, 
 ``` python manage.py runserver```
 
+# Environment variables you need:
+
+## From your email service provider
+EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD
+
+## From Stripe
+STRIPE_PUBLISHABLE_KEY
+STRIPE_SECRET_KEY
+STRIPE_WEBHOOK_SECRET
+
+## Price ID from Stripe
+HOBBYIST_YEARLY
+PRO_LIFETIME
+
 # Contact me
 The best way to contact me is through X (@joji_jiji)
+
+# License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
